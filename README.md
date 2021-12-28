@@ -15,6 +15,8 @@
 
 Para rodar a api será necessário ter instalado na máquina o docker, docker-compose e o java (jdk16)
 
+Para rodar os testes automatizados deve ter instalado o java 16 na máquina (jdk16)
+
 ### 🎲 Buildando e Executando a API
 
 ```bash
@@ -30,6 +32,9 @@ $ git clone https://github.com/diegosub/bank-api.git
 # Para executar os testes automatizados:
       ./mvnw verify
       # Irá rodar somente os testes automatizados 
+      
+# O swagger está disponível na url:
+      http://localhost:8080/api/v1/swagger-ui.html
 
 ```
 
@@ -47,6 +52,18 @@ O projeto está dividido em 2 camadas principais:
   configurações de segurança via @Bean e middlewares de validação do token, 
   dtos e middlewares para tratamento de exceções.  
   DOMAIN: Camada de Models, Services, Repositórios e Exceptions personalizadas.
+  
+  
+### Login
+
+Para gerar um token de acesso (login):
+
+      1) Cadastrar uma conta com o cpf válido (http://localhost:8080/api/v1/conta);
+      2) Executar o endpoint de autenticação (http://localhost:8080/api/v1/auth) passando o cpf cadastrado e a senha padrão: 123;
+      3) O login te retornará um token;
+      4) Use o token no header das requisições que precisam de autenticação no padrão:
+            Authorization: "seutokenjwtgeradonologin"
+      
     
 
 
