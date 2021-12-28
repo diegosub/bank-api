@@ -24,17 +24,12 @@ $ git clone https://github.com/diegosub/bank-api.git
 # Abra o terminal na pasta raiz do projeto
 
 # Execute o comando: 
-      docker-compose up -d bank-postgres
-      # Este comando irá subir o ambiente postgres na máquina e logo após iremos gerar a imagem do projeto.
+      docker-compose up -d
+      # Este comando irá gerar as imagens e criar o ambiente completo da api sem executar os testes.
 
-# Gerando a imagem do projeto:
-      ./mvnw clean package -Pdocker
-      # Ao buildar o projeto, o maven irá rodar todos os testes de api e de integração. 
-      
-# Subindo a API via docker-compose:
-      docker-compose up -d bank-api
-      # Finalmente o docker compose irá executar todos os serviços necessários para disponibilizar a API
-      
+# Para executar os testes automatizados:
+      ./mvnw verify
+      # Irá rodar somente os testes automatizados 
 
 ```
 
