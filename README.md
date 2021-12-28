@@ -32,7 +32,7 @@ $ git clone https://github.com/diegosub/bank-api.git
       # Ao buildar o projeto, o maven irá rodar todos os testes de api e de integração. 
       
 # Subindo a API via docker-compose:
-      docker-compose up -d
+      docker-compose up -d bank-api
       # Finalmente o docker compose irá executar todos os serviços necessários para disponibilizar a API
       
 
