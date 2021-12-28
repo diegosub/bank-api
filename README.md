@@ -19,7 +19,7 @@ Para rodar a api será necessário ter instalado na máquina o docker e docker-c
 
 ```bash
 # Clone este repositório
-$ git clone <https://github.com/diegosub/bank-api.git>
+$ git clone https://github.com/diegosub/bank-api.git
 
 # Abra o terminal na pasta raiz do projeto
 
