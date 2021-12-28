@@ -23,7 +23,7 @@ import br.com.bank.util.DatabaseCleaner;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-public class ConsultaHistoricoTest {
+public class ConsultaHistoricoIT {
  
    @Autowired
    private MockMvc mockMvc;

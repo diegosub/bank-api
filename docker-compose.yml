@@ -17,21 +17,10 @@ services:
     #  - /home/diego/Documents/postgres-data:/var/lib/postgresql/data
     - ./create_bank_db_test.sh:/docker-entrypoint-initdb.d/create_bank_db_test.sh
     networks:
-      - bank-network
-      
-  bank-postgres-test:
-    image: postgres:14.1
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=bank_db_test
-    ports:
-      - "5432:5432"
-    networks:
-      - bank-network
+      - bank-network    
 
   bank-api:
-    image: bank-api
+    build: ./
     environment:
       DB_HOST: bank-postgres
     ports:

@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.bank.api.dto.auth.AutenticacaoDto;
 import br.com.bank.api.dto.auth.UsuarioAutenticadoDto;
 import br.com.bank.api.dto.deposito.DepositoDto;
-import br.com.bank.api.dto.transferencia.TransferenciaDto;
 import br.com.bank.domain.business.operacao.model.Conta;
 import br.com.bank.domain.business.operacao.service.ContaService;
 import br.com.bank.domain.business.seguranca.model.Usuario;
@@ -31,16 +30,16 @@ import br.com.bank.util.DatabaseCleaner;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-public class CadastroTransferenciaTest {
+public class CadastroDepositoIT {
  
    @Autowired
    private MockMvc mockMvc;
    
    @Autowired
-   private LoginService loginService;
+   private DatabaseCleaner dataBaseCleaner;
    
    @Autowired
-   private DatabaseCleaner dataBaseCleaner;
+   private LoginService loginService;
    
    @Autowired
    private ContaService contaService;
@@ -52,12 +51,11 @@ public class CadastroTransferenciaTest {
    }
    
    @Test
-   public void deveRetornar200_quandoInserirTransferencia() throws Exception {
-      TransferenciaDto dto = new TransferenciaDto();
+   public void deveRetornar200_quandoInserirDeposito() throws Exception {
+      DepositoDto dto = new DepositoDto();
       dto.setContaId(2l);
-      dto.setContaDestId(3l);
       dto.setValor(100.0);
-      this.mockMvc.perform(post("/transferencia")
+      this.mockMvc.perform(post("/deposito")
                   .contentType(MediaType.APPLICATION_JSON)
                   .header("Authorization", getToken())
                   .accept(MediaType.APPLICATION_JSON)
@@ -69,30 +67,44 @@ public class CadastroTransferenciaTest {
    }
    
    @Test
-   public void deveRetornar400_quandoTransferenciaNegativarConta() throws Exception {
-      TransferenciaDto dto = new TransferenciaDto();
+   public void deveRetornar400_quandoValorMaiorQue2000() throws Exception {
+      DepositoDto dto = new DepositoDto();
       dto.setContaId(2l);
-      dto.setContaDestId(3l);
-      dto.setValor(100000.0);
+      dto.setValor(3000.0);
       
-      this.mockMvc.perform(post("/transferencia")
+      this.mockMvc.perform(post("/deposito")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", getToken())
             .accept(MediaType.APPLICATION_JSON)
             .content(this.asJsonString(dto)))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.userMessage", is("A conta de origem da transferência não pode ficar negativa.")));
+            .andExpect(jsonPath("$.objects[0].userMessage", is("O valor máximo para depósito é de R$ 2.000,00")));
    }
    
    @Test
-   public void deveRetornar400_quandoInserirTransferenciaContaInexistente() throws Exception {
-      TransferenciaDto dto = new TransferenciaDto();
-      dto.setContaId(1000l);
-      dto.setContaDestId(3000l);
+   public void deveRetornar400_quandoInserirDepositoNegativo() throws Exception {
+      DepositoDto dto = new DepositoDto();
+      dto.setContaId(2l);
+      dto.setValor(-500.0);
+      
+      this.mockMvc.perform(post("/deposito")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header("Authorization", getToken())
+            .accept(MediaType.APPLICATION_JSON)
+            .content(this.asJsonString(dto)))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.userMessage", is("A conta não pode ficar negativa.")));
+   }
+   
+   @Test
+   public void deveRetornar400_quandoInserirDepositoContaInexistente() throws Exception {
+      DepositoDto dto = new DepositoDto();
+      dto.setContaId(0l);
       dto.setValor(10.0);
       
-      this.mockMvc.perform(post("/transferencia")
+      this.mockMvc.perform(post("/deposito")
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", getToken())
             .accept(MediaType.APPLICATION_JSON)
@@ -104,7 +116,7 @@ public class CadastroTransferenciaTest {
    
    public String getToken() throws Exception {
       AutenticacaoDto dto = new AutenticacaoDto();
-      dto.setCpf("23043408063");
+      dto.setCpf("63722864089");
       dto.setSenha("123");
       
       UsuarioAutenticadoDto retorno = loginService.login(dto);
@@ -122,16 +134,9 @@ public class CadastroTransferenciaTest {
    public void prepararDados() {
       Conta conta1 = new Conta();
       conta1.setUsuario(new Usuario());
-      conta1.getUsuario().setNome("André Paulo");
-      conta1.getUsuario().setCpf(23043408063l);
-      conta1.setSaldo(200.0);
+      conta1.getUsuario().setNome("Mario Ricardo");
+      conta1.getUsuario().setCpf(63722864089l);
       contaService.inserir(conta1);
-      
-      Conta conta2 = new Conta();
-      conta2.setUsuario(new Usuario());
-      conta2.getUsuario().setNome("Anderson Piquet");
-      conta2.getUsuario().setCpf(45058526018l);
-      contaService.inserir(conta2);
    }
    
 }

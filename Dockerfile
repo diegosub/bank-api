@@ -1,11 +1,16 @@
-FROM openjdk:16
-
+#
+# Build stage
+#
+FROM maven:3.8.3-openjdk-16 AS build
 WORKDIR /app
+COPY src /app/src
+COPY pom.xml /app
+RUN mvn -f /app/pom.xml clean package
 
-ARG JAR_FILE
-
-COPY target/${JAR_FILE} /app/bank-api.jar
-
+#
+# Package stage
+#
+FROM openjdk:16
+COPY --from=build /app/target/bank-api.jar /usr/local/lib/bank-api.jar
 EXPOSE 8080
-
-CMD ["java", "-jar", "bank-api.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/bank-api.jar"]

@@ -26,7 +26,7 @@ import br.com.bank.util.DatabaseCleaner;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
-public class LoginTest {
+public class LoginIT {
  
    @Autowired
    private MockMvc mockMvc;
