@@ -13,7 +13,7 @@
 
 ### Pré-requisitos
 
-Para rodar a api será necessário ter instalado na máquina o docker e docker-compose
+Para rodar a api será necessário ter instalado na máquina o docker, docker-compose e o java (jdk16)
 
 ### 🎲 Buildando e Executando a API
 
