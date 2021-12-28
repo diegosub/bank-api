@@ -10,7 +10,7 @@ import lombok.Setter;
 public class AutenticacaoDto {
 
    @NotBlank(message = "O login é obrigatório.")
-   private String email;
+   private String cpf;
 
    @NotBlank(message = "A senha é obrigatória.")
    private String senha;

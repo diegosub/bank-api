@@ -35,8 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       http.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorized).and().sessionManagement()
                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js")
-               .permitAll().antMatchers("/conta")
-               .permitAll().antMatchers("/conta/*")
                .permitAll().antMatchers(AUTH_WHITELIST)
                .permitAll().anyRequest().authenticated();
       http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
@@ -71,7 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
            "/swagger-resources/**",
            "/swagger-ui.html",
            "/v2/api-docs",
-           "/webjars/**"
+           "/webjars/**",
+           "/auth",
+           "/conta",
+           "/conta/*"
    };
 
 }

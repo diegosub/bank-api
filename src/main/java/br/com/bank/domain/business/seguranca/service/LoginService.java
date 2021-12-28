@@ -21,7 +21,7 @@ public class LoginService {
     private JwtToken jwtTokenUtil;
 
     public UsuarioAutenticadoDto login(AutenticacaoDto dto) {
-        Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha()));
+        Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getCpf(), dto.getSenha()));
         JwtUser user = (JwtUser) auth.getPrincipal();
 
         final String token = jwtTokenUtil.gerarToken(user.getId(), user.getUsername());

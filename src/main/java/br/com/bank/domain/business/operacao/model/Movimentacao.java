@@ -25,7 +25,7 @@ import lombok.Setter;
 public class Movimentacao
 {
    @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_operacao")
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_movimentacao")
    private Long id;
    
    @Column(name = "conta_id")

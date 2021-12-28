@@ -2,9 +2,6 @@ package br.com.bank.domain.business.seguranca.service;
 
 import java.util.List;
 
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
-import org.passay.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +20,8 @@ public class UsuarioService extends CrudService<Usuario, Long, UsuarioRepository
    
    @Autowired
    private BCryptPasswordEncoder bcrypt;
+
+   private final String SENHA_DEFAULT = "123";
 
    public List<Usuario> pesquisar(Usuario usuario, String[] juncoes, String[] ordenacoes) {
       List<Usuario> lista = repository.findAll(Specification.where(GenericSpecification.<Usuario>fetch(juncoes))
@@ -57,8 +56,9 @@ public class UsuarioService extends CrudService<Usuario, Long, UsuarioRepository
    }
 
    public String generatePassword() {
-      CharacterRule digits = new CharacterRule(EnglishCharacterData.Digit);
-      PasswordGenerator passwordGenerator = new PasswordGenerator();
-      return passwordGenerator.generatePassword(4, digits);
+      // CharacterRule digits = new CharacterRule(EnglishCharacterData.Digit);
+      // PasswordGenerator passwordGenerator = new PasswordGenerator();
+      // return passwordGenerator.generatePassword(4, digits);
+      return SENHA_DEFAULT;
    }
 }

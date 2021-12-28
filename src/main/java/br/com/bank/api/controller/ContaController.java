@@ -23,14 +23,14 @@ import br.com.bank.domain.business.seguranca.model.Usuario;
 @RestController
 @RequestMapping("conta")
 @CrossOrigin(origins = "*")
-public class ContaController extends BaseController {
+public class ContaController {
 
    @Autowired
    ContaService service;
 
    @GetMapping(value = "{codigo}")
    public ResponseEntity<Conta> get(HttpServletRequest request, @PathVariable("codigo") Long codigo) {
-      return ResponseEntity.ok(service.getById(codigo));
+      return ResponseEntity.ok(service.obterPorId(codigo));
    }
 
    @GetMapping

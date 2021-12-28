@@ -27,9 +27,11 @@ public class Operacao
    @Id
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_operacao")
    private Long id;
-   
-   @Column(name = "usuario_id")
-   private Long usuarioId;
+
+   @Column(name = "conta_id")
+   private Long contaId;
+   @Column(name = "conta_dest_id")
+   private Long contaDestId;
    private String tipo;
    private String descricao;
    private Double valor;

@@ -32,8 +32,7 @@ public class ContaService extends CrudService<Conta, Long, ContaRepository> {
    }
    
    @Override
-   public Conta getById(Long id)
-   {
+   public Conta obterPorId(Long id) {
       Conta retorno = repository.findOne(Specification.where(GenericSpecification.<Conta>fetch(new String[] {"usuario"}))
                                                         .and(GenericSpecification.<Conta>igual("id", id)))
                                                         .orElseThrow(() -> new NegocioException("Conta não encontrada."));
@@ -42,12 +41,11 @@ public class ContaService extends CrudService<Conta, Long, ContaRepository> {
    
    @Override
    @Transactional
-   public Conta inserir(Conta entity)
-   {
+   public Conta inserir(Conta entity) {
       Usuario usuario = entity.getUsuario();
       usuario = usuarioService.inserir(entity.getUsuario());
       entity.setUsuarioId(usuario.getId());
-      entity.setSaldo(0.0);
+      entity.setSaldo(entity.getSaldo() == null ? 0.0 : entity.getSaldo());
       repository.save(entity);
       return entity;
    }

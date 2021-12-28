@@ -23,7 +23,7 @@ public abstract class CrudService<Entity, IdClass extends Serializable, Reposito
    protected Repository repository;
 
    @Transactional
-   public Entity getById(IdClass id) {
+   public Entity obterPorId(IdClass id) {
       Entity retorno = repository.findById(id).orElseThrow(() -> new NegocioException("Entidade não encontrada."));
       return retorno;
    }

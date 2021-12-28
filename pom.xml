@@ -12,7 +12,7 @@
 	</parent>
 
 	<groupId>br.com.bank</groupId>
-	<artifactId>bank</artifactId>
+	<artifactId>bank-api</artifactId>
 	<version>1.0</version>
 	<name>bank-api</name>
 	<description>API - Controle de Contas Bancarias</description>
@@ -98,7 +98,7 @@
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.3</version>
+			<version>1.9.4</version>
 		</dependency>
 
 		<dependency>
